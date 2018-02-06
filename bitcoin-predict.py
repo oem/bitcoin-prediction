@@ -81,4 +81,4 @@ rmse = math.sqrt(mean_squared_error(
     test_set[TIME_STEPS:len(y_test)], y_test[0:len(y_test) - TIME_STEPS]))
 print("RMSE:", rmse)
 
-regressor_mae.save(filepath="models/01_with_mae_30.h5")
+regressor_mae.save(filepath="models/01_with_mae.h5")
