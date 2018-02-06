@@ -4,11 +4,6 @@ from src.models.train import train_regressor_mae
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 import pandas as pd
-from keras.preprocessing import sequence
-from keras.models import load_model
-from keras.layers import Dense
-from keras.layers import Input, LSTM
-from keras.models import Model
 import h5py
 import math
 from sklearn.metrics import mean_squared_error
