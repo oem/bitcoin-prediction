@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def load_data():
-    df = pd.read_csv('../data/all_time.csv')
+def load_data(path):
+    df = pd.read_csv(path)
     df.columns = ['DATE', 'PRICE']
     return(df)
