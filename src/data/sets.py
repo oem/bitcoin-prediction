@@ -33,6 +33,11 @@ def scale_dataset(df):
     return(dataset, sc)
 
 
+def reshape_for_lstm(data, time_steps):
+    # reshape input to match [samples, time_steps, features]
+    return(np.reshape(data, (data.shape[0], time_steps, data.shape[1])))
+
+
 def training_set(df, batch_size, test_size, time_steps):
     training_set_length = calc_training_size(len(df), batch_size, test_size)
     train_with_padding = training_set_length + time_steps * 2
