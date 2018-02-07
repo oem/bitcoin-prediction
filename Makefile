@@ -6,3 +6,6 @@ mae.predict:
 
 mae.train:
 	python -m src.models.train-mae
+
+predict:
+	python -m src.models.predict

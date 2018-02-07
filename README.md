@@ -35,6 +35,14 @@ Meaning, you can easily update and retrain the neural network to stay current!
 
 `make mae.predict`
 
+This uses the last entry from the test set to predict the next closing price.
+
+If you would like to provide the last closing price yourself and see what the LSTM will predict, use this:
+
+`make predict`
+
+This script is probably going to be the most useful!
+
 #### train
 
 `make mae.train`
