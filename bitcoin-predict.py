@@ -1,5 +1,5 @@
 from src.data.load import load_csv
-from src.data.sets import create_train_test, scale_dataset, reshape_for_lstm
+from src.data.sets import prepare_data_lstm
 from src.models.train import train_regressor_mae
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
@@ -20,10 +20,7 @@ TEST_SIZE = 0.2
 
 # prepare the training and test set
 df = load_csv("./data/all_time_daily.csv")
-dataset, sc = scale_dataset(df)
-X_train, X_test, y_train, y_test = create_train_test(dataset, TEST_SIZE)
-X_train = reshape_for_lstm(X_train, TIME_STEPS)
-X_test = reshape_for_lstm(X_test, TIME_STEPS)
+dataset, sc, X_train, X_test, y_train, y_test = prepare_data_lstm(df, 1, 0.2)
 
 # load or train the regressor
 if len(sys.argv) > 1 and sys.argv[1] == "train":
