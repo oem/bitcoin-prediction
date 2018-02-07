@@ -3,3 +3,6 @@ mae.visualize:
 
 mae.predict:
 	python -m src.models.predict-mae
+
+mae.train:
+	python -m src.models.train-mae

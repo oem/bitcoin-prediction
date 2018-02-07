@@ -1,5 +1,6 @@
 from ..data.load import load_csv
 from ..data.sets import prepare_data_lstm
+from ..models.train import train_regressor_mae
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 import h5py
@@ -15,14 +16,10 @@ TEST_SIZE = 0.2
 # prepare the training and test set
 df = load_csv("data/all_time_daily.csv")
 dataset, sc, X_train, X_test, y_train, y_test = prepare_data_lstm(df, 1, 0.2)
-regressor = load_model(filepath="models/01_with_mse.h5")
 
-# load or train the regressor
-# if len(sys.argv) > 1 and sys.argv[1] == "train":
-#     regressor = train_regressor_mae(
-#         X_train, y_train, BATCH_SIZE, TIME_STEPS, EPOCHS)
-#     regressor.save(filepath="models/01_with_mse.h5")
-# else:
+regressor = train_regressor_mae(
+    X_train, y_train, BATCH_SIZE, TIME_STEPS, EPOCHS)
+regressor.save(filepath="models/01_with_mae.h5")
 
 # predict
 predicted_train = regressor.predict(X_train)
