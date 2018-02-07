@@ -52,19 +52,3 @@ test_score = math.sqrt(mean_squared_error(
     y_test[:, 0], predicted_test[:, 0]))
 print("Train Score: %.2f RMSE" % train_score)
 print("Test Score: %.2f RMSE" % test_score)
-
-# shift train predictions for plotting
-trainPredictPlot = np.empty_like(dataset)
-trainPredictPlot[:, :] = np.nan
-trainPredictPlot[1:len(predicted_train)+1, :] = predicted_train
-
-# shift test predictions for plotting
-testPredictPlot = np.empty_like(dataset)
-testPredictPlot[:, :] = np.nan
-testPredictPlot[len(predicted_train):len(dataset)-1, :] = predicted_test
-
-# plot baseline and predictions
-plt.plot(sc.inverse_transform(dataset))
-plt.plot(trainPredictPlot)
-plt.plot(testPredictPlot)
-plt.show()
