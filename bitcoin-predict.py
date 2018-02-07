@@ -1,5 +1,5 @@
 from src.data.load import load_csv
-from src.data.sets import training_set, calc_test_size, test_set, create_train_test
+from src.data.sets import create_train_test, scale_dataset
 from src.models.train import train_regressor_mae
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
@@ -20,10 +20,7 @@ TEST_SIZE = 0.2
 
 # prepare the training and test set
 df = load_csv("./data/all_time_daily.csv")
-df = df.iloc[::-1]
-df = df.drop(['Date', 'Open', 'High', 'Low', 'Volume', 'Market Cap'], axis=1)
-sc = MinMaxScaler(feature_range=(0, 1))
-dataset = sc.fit_transform(df.values.astype('float32'))
+dataset, sc = scale_dataset(df)
 X_train, X_test, y_train, y_test = create_train_test(dataset, TEST_SIZE)
 
 # reshape input to match [samples, time_steps, features]
@@ -36,7 +33,7 @@ if len(sys.argv) > 1 and sys.argv[1] == "train":
         X_train, y_train, BATCH_SIZE, TIME_STEPS, EPOCHS)
     regressor.save(filepath="models/01_with_mse.h5")
 else:
-    regressor = load_model(filepath="models/01_with_mae.h5")
+    regressor = load_model(filepath="models/01_with_mse.h5")
 
 # predict
 predicted_train = regressor.predict(X_train)

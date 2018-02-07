@@ -24,6 +24,15 @@ def create_train_test(dataset, test_size):
     return(train_test_split(X, y, test_size=test_size, shuffle=False))
 
 
+def scale_dataset(df):
+    df = df.iloc[::-1]  # the order of the data was sorted Date/DESC
+    df = df.drop(['Date', 'Open', 'High', 'Low',
+                  'Volume', 'Market Cap'], axis=1)
+    sc = MinMaxScaler(feature_range=(0, 1))
+    dataset = sc.fit_transform(df.values.astype('float32'))
+    return(dataset, sc)
+
+
 def training_set(df, batch_size, test_size, time_steps):
     training_set_length = calc_training_size(len(df), batch_size, test_size)
     train_with_padding = training_set_length + time_steps * 2
