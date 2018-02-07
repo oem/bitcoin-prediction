@@ -28,6 +28,7 @@ predicted_test_plot[len(predicted_train):len(dataset)-1, :] = predicted_test
 
 # plot baseline and predictions
 plt.plot(sc.inverse_transform(dataset))
-plt.plot(predicted_train_plot)
-plt.plot(predicted_test_plot)
+plt.plot(predicted_train_plot, label='predictions on the training set')
+plt.plot(predicted_test_plot, label='predictions on the test set')
+plt.legend()
 plt.show()
