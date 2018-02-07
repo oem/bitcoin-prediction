@@ -8,12 +8,11 @@ from ..data.load import load_csv
 
 df = load_csv("data/all_time_daily.csv")
 dataset, sc, X_train, X_test, y_train, y_test = prepare_data_lstm(df, 1, 0.2)
-model = load_model(filepath="models/01_with_mse.h5")
+model = load_model(filepath="models/01_with_mae.h5")
 
 # predict
 predicted_train = model.predict(X_train)
 predicted_test = model.predict(X_test)
-
 predicted_train = sc.inverse_transform(predicted_train)
 predicted_test = sc.inverse_transform(predicted_test)
 

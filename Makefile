@@ -1,5 +1,5 @@
-mse.visualize:
-	python -m src.visualization.01-mse
+mae.visualize:
+	python -m src.visualization.01-mae
 
-mse.predict:
-	python -m src.models.predict-mse
+mae.predict:
+	python -m src.models.predict-mae
