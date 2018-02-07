@@ -1,5 +1,5 @@
 from src.data.load import load_csv
-from src.data.sets import training_set, calc_test_size, test_set
+from src.data.sets import training_set, calc_test_size, test_set, create_train_test
 from src.models.train import train_regressor_mae
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
@@ -7,39 +7,69 @@ import pandas as pd
 import h5py
 import math
 from sklearn.metrics import mean_squared_error
+from keras.models import load_model
+import sys
+import matplotlib
+matplotlib.use('TkAgg')
+import matplotlib.pyplot as plt
 
-BATCH_SIZE = 64
-EPOCHS = 120
-TIME_STEPS = 30
+BATCH_SIZE = 1
+EPOCHS = 15
+TIME_STEPS = 1
 TEST_SIZE = 0.2
 
-df = load_csv("./data/all_time.csv")
-X_train, y_train = training_set(df, BATCH_SIZE, TEST_SIZE, TIME_STEPS)
+# prepare the training and test set
+df = load_csv("./data/all_time_daily.csv")
+df = df.iloc[::-1]
+df = df.drop(['Date', 'Open', 'High', 'Low', 'Volume', 'Market Cap'], axis=1)
+sc = MinMaxScaler(feature_range=(0, 1))
+dataset = sc.fit_transform(df.values.astype('float32'))
+X_train, X_test, y_train, y_test = create_train_test(dataset, TEST_SIZE)
 
-regressor = train_regressor_mae(
-    X_train, y_train, BATCH_SIZE, TIME_STEPS, EPOCHS)
+# reshape input to match [samples, time_steps, features]
+X_train = np.reshape(X_train, (X_train.shape[0], TIME_STEPS, X_train.shape[1]))
+X_test = np.reshape(X_test, (X_test.shape[0], TIME_STEPS, X_test.shape[1]))
 
-X_test, test_set, sc = test_set(df, BATCH_SIZE, TIME_STEPS, X_train)
+# load or train the regressor
+if len(sys.argv) > 1 and sys.argv[1] == "train":
+    regressor = train_regressor_mae(
+        X_train, y_train, BATCH_SIZE, TIME_STEPS, EPOCHS)
+    regressor.save(filepath="models/01_with_mse.h5")
+else:
+    regressor = load_model(filepath="models/01_with_mae.h5")
 
-predicted_mae = regressor.predict(X_test, batch_size=BATCH_SIZE)
-regressor.reset_states()
+# predict
+predicted_train = regressor.predict(X_train)
+predicted_test = regressor.predict(X_test)
 
-predicted_mae = np.reshape(
-    predicted_mae, (predicted_mae.shape[0], predicted_mae.shape[1]))
-predicted_mae = sc.inverse_transform(predicted_mae)
+one_day_predict = regressor.predict(np.asarray([[y_test[-1]]]))
+print(sc.inverse_transform(y_test)[-1], sc.inverse_transform(one_day_predict))
 
-padded_train_size = len(X_train) + TIME_STEPS * 2
-testset_length = calc_test_size(
-    len(df), BATCH_SIZE, TIME_STEPS, padded_train_size)
+predicted_train = sc.inverse_transform(predicted_train)
+predicted_test = sc.inverse_transform(predicted_test)
+y_train = sc.inverse_transform(y_train)
+y_test = sc.inverse_transform(y_test)
 
-y_test = []
-for j in range(0, testset_length - TIME_STEPS):
-    y_test = np.append(y_test, predicted_mae[j, TIME_STEPS - 1])
+# measure
+train_score = math.sqrt(mean_squared_error(
+    y_train[:, 0], predicted_train[:, 0]))
+test_score = math.sqrt(mean_squared_error(
+    y_test[:, 0], predicted_test[:, 0]))
+print("Train Score: %.2f RMSE" % train_score)
+print("Test Score: %.2f RMSE" % test_score)
 
-y_test = np.reshape(y_test, (y_test.shape[0], 1))
+# shift train predictions for plotting
+trainPredictPlot = np.empty_like(dataset)
+trainPredictPlot[:, :] = np.nan
+trainPredictPlot[1:len(predicted_train)+1, :] = predicted_train
 
-rmse = math.sqrt(mean_squared_error(
-    test_set[TIME_STEPS:len(y_test)], y_test[0:len(y_test) - TIME_STEPS]))
-print("RMSE:", rmse)
+# shift test predictions for plotting
+testPredictPlot = np.empty_like(dataset)
+testPredictPlot[:, :] = np.nan
+testPredictPlot[len(predicted_train):len(dataset)-1, :] = predicted_test
 
-regressor.save(filepath="models/01_with_mae.h5")
+# plot baseline and predictions
+plt.plot(sc.inverse_transform(dataset))
+plt.plot(trainPredictPlot)
+plt.plot(testPredictPlot)
+plt.show()
