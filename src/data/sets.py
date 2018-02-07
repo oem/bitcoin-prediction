@@ -1,4 +1,5 @@
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
 import numpy as np
 
 
@@ -11,6 +12,16 @@ def calc_test_size(length, batch_size, time_steps, padded_training_size):
     length -= time_steps * 2
     length -= padded_training_size
     return(int(length - (length % batch_size)))
+
+
+def create_train_test(dataset, test_size):
+    np.random.seed(42)
+    X, y = [], []
+    for i in range(len(dataset) - 1):
+        X.append(dataset[i])
+        y.append(dataset[i+1])
+    X, y = np.asarray(X), np.asarray(y)
+    return(train_test_split(X, y, test_size=test_size, shuffle=False))
 
 
 def training_set(df, batch_size, test_size, time_steps):
