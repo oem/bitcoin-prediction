@@ -33,6 +33,14 @@ def scale_dataset(df):
     return(dataset, sc)
 
 
+def prepare_data_lstm(df, time_steps, test_ratio):
+    dataset, sc = scale_dataset(df)
+    X_train, X_test, y_train, y_test = create_train_test(dataset, test_ratio)
+    X_train = reshape_for_lstm(X_train, time_steps)
+    X_test = reshape_for_lstm(X_test, time_steps)
+    return(dataset, sc, X_train, X_test, y_train, y_test)
+
+
 def reshape_for_lstm(data, time_steps):
     # reshape input to match [samples, time_steps, features]
     return(np.reshape(data, (data.shape[0], time_steps, data.shape[1])))
