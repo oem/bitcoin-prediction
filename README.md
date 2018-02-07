@@ -1,5 +1,10 @@
 # bitcoin prediction
 
+This is a relatively simple model for bitcoin price prediction.
+It uses a neural network to build a regressor, specifically, an LSTM.
+
+Included are a notebook with some background information and some more polished code, that is pretty much ready to be used in less gimmicky environments than a notebook.
+
 ## Setup
 
 ### Install all the requirements
