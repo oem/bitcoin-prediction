@@ -25,10 +25,6 @@ regressor.save(filepath="models/01_with_mae.h5")
 predicted_train = regressor.predict(X_train)
 predicted_test = regressor.predict(X_test)
 
-one_day_predict = regressor.predict(np.asarray([[y_test[-1]]]))
-print(sc.inverse_transform(y_test)
-      [-1], sc.inverse_transform(one_day_predict).flatten())
-
 predicted_train = sc.inverse_transform(predicted_train)
 predicted_test = sc.inverse_transform(predicted_test)
 y_train = sc.inverse_transform(y_train)
