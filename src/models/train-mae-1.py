@@ -1,6 +1,6 @@
 from ..data.load import load_csv
 from ..data.sets import prepare_data_lstm
-from ..models.train import train_regressor_mae
+from ..models.train import train_mae_1
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 import h5py
@@ -17,7 +17,7 @@ TEST_SIZE = 0.2
 df = load_csv("data/all_time_daily.csv")
 dataset, sc, X_train, X_test, y_train, y_test = prepare_data_lstm(df, 1, 0.2)
 
-regressor = train_regressor_mae(
+regressor = train_mae_1(
     X_train, y_train, BATCH_SIZE, TIME_STEPS, EPOCHS)
 regressor.save(filepath="models/01_with_mae.h5")
 

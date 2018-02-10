@@ -4,7 +4,7 @@ from keras.layers import Input, LSTM
 from keras.models import Model, Sequential
 
 
-def train_regressor_mae(X_train, y_train, batch_size, time_steps, epochs):
+def train_mae_1(X_train, y_train, batch_size, time_steps, epochs):
     model = Sequential()
     model.add(LSTM(4, input_shape=(1, 1)))
     model.add(Dense(1))
