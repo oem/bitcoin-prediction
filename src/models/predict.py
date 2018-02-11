@@ -6,7 +6,7 @@ from keras.models import load_model
 
 
 # prepare the training and test set
-df = load_csv("data/all_time_close.csv")
+df = load_csv()
 dataset, sc, X_train, X_test, y_train, y_test = prepare_data_lstm(df, 1, 0.2)
 regressor = load_model(filepath="models/01_with_mae.h5")
 previous_price = sc.transform(np.asarray(
