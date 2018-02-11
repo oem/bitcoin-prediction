@@ -14,9 +14,7 @@ def create_train_test(dataset, test_size):
 
 
 def scale_dataset(df):
-    df = df.iloc[::-1]  # the order of the data was sorted Date/DESC
-    df = df.drop(['Date', 'Open', 'High', 'Low',
-                  'Volume', 'Market Cap'], axis=1)
+    # df = df.iloc[::-1]  # the order of the data was sorted Date/DESC
     sc = MinMaxScaler(feature_range=(0, 1))
     dataset = sc.fit_transform(df.values.astype('float32'))
     return(dataset, sc)

@@ -14,7 +14,7 @@ TIME_STEPS = 1
 TEST_SIZE = 0.2
 
 # prepare the training and test set
-df = load_csv("data/all_time_daily.csv")
+df = load_csv("data/all_time_close.csv")
 dataset, sc, X_train, X_test, y_train, y_test = prepare_data_lstm(df, 1, 0.2)
 
 regressor = train_mae_1(

@@ -6,7 +6,7 @@ import numpy as np
 from ..data.sets import prepare_data_lstm
 from ..data.load import load_csv
 
-df = load_csv("data/all_time_daily.csv")
+df = load_csv("data/all_time_close.csv")
 dataset, sc, X_train, X_test, y_train, y_test = prepare_data_lstm(df, 1, 0.2)
 model = load_model(filepath="models/01_with_mae.h5")
 
@@ -27,7 +27,7 @@ predicted_test_plot[:, :] = np.nan
 predicted_test_plot[len(predicted_train):len(dataset)-1, :] = predicted_test
 
 # plot baseline and predictions
-plt.plot(sc.inverse_transform(dataset))
+plt.plot(sc.inverse_transform(dataset), label='real values')
 plt.plot(predicted_train_plot, label='predictions on the training set')
 plt.plot(predicted_test_plot, label='predictions on the test set')
 plt.legend()
