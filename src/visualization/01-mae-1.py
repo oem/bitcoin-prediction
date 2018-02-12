@@ -6,7 +6,7 @@ import numpy as np
 from ..data.sets import prepare_data_lstm
 from ..data.load import load_csv
 
-df = load_csv("data/all_time_close.csv")
+df = load_csv()
 dataset, sc, X_train, X_test, y_train, y_test = prepare_data_lstm(df, 1, 0.2)
 model = load_model(filepath="models/01_with_mae.h5")
 
