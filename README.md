@@ -1,6 +1,6 @@
 # bitcoin prediction
 
-This is a relatively simple model for bitcoin price prediction.
+This is a relatively simple model for bitcoin closing price prediction.
 It uses a neural network to build a regressor, specifically, an LSTM.
 
 Included are a notebook with some background information and some more polished code, that is pretty much ready to be used in less gimmicky environments than a notebook.
@@ -13,11 +13,15 @@ Included are a notebook with some background information and some more polished 
 
 ## What should I check out first
 
-A good starting point would be to check out the 1.0-oo-initial-rough-lstm notebook.
+A good starting point would be to check out the 01-oo-mae-1-30 notebook.
 
 It is hopefully well enough documented to get you going.
 
 ## Models
+
+### MAE-01/30
+
+This is the model used in the notebook. It uses mean absolute error as loss function and the last 30 datapoints as feature.
 
 ### MAE-01
 
@@ -29,11 +33,11 @@ Meaning, you can easily update and retrain the neural network to stay current!
 
 #### visualization
 
-`make mae.visualize`
+`make mae-1.visualize`
 
 #### predict
 
-`make mae.predict`
+`make mae-1.predict`
 
 This uses the last entry from the test set to predict the next closing price.
 
@@ -45,4 +49,4 @@ This script is probably going to be the most useful!
 
 #### train
 
-`make mae.train`
+`make mae-1.train`
