@@ -13,15 +13,15 @@ Included are a notebook with some background information and some more polished 
 
 ## What should I check out first
 
-A good starting point would be to check out the 01-oo-mae-1-30 notebook.
+A good starting point would be to check out the 01-oo-mae-1-15 notebook.
 
 It is hopefully well enough documented to get you going.
 
 ## Models
 
-### MAE-01/30
+### MAE-01/15
 
-This is the model used in the notebook. It uses mean absolute error as loss function and the last 30 datapoints as feature.
+This is the model used in the notebook. It uses mean absolute error as loss function and the last 15 datapoints as feature.
 
 ### MAE-01
 
