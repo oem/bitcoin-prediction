@@ -23,7 +23,7 @@ It is hopefully well enough documented to get you going.
 
 ### MAE-01/15
 
-This is the model used in the notebook. It uses mean absolute error as loss function and the last 15 datapoints as feature.
+This is the model used in the notebook. It uses mean absolute error as loss function and the last 15 datapoints as features.
 
 ### MAE-01
 
