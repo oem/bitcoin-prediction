@@ -7,6 +7,10 @@ They use a neural network to predict the prices, specifically, an LSTM.
 
 Included are a notebook with some background information and some slightly more polished code, that is pretty much ready to be used in less gimmicky environments than a notebook.
 
+## data source
+
+The bitcoin closing prices have been kindly provided by coindesk.com.
+
 ## Setup
 
 ### Install all the requirements
@@ -31,7 +35,7 @@ This model is a simplified but more effective version of the one we build in the
 
 You can actually use this model for more serious cases than the one in the notebook. The path to the dataset is currently hardcoded, but that is easily changed.
 
-Meaning, you can easily update and retrain the neural network to stay current!
+Meaning, you can easily update and retrain the neural network to stay current.
 
 #### visualization
 
