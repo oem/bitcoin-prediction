@@ -3,7 +3,7 @@
 ![bitcoin closing prices](notebooks/img/bitcoin.png)
 
 Included in this repo are a few, simple models for bitcoin closing price prediction.
-They use a neural network to predict the prices, specifically, an LSTM.
+They use a neural network to predict the prices, specifically, an LSTM network.
 
 Included are a notebook with some background information and some slightly more polished code, that is pretty much ready to be used in less gimmicky environments than a notebook.
 
