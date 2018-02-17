@@ -23,6 +23,8 @@ A good starting point would be to check out the 01-oo-mae-1-15 notebook.
 
 It is hopefully well enough documented to get you going.
 
+If you are interested in some basic background information about neural networks, there is a small notebook with some, maybe helpful information (00-oo-ann-intro).
+
 ## Models
 
 ### MAE-01/15
